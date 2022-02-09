@@ -6,7 +6,7 @@ Content-Type: application/json
 {   
     "Text": "Imersão começou...",
     "User": {
-        "Name": "Luiz Carlos"
+        "Name": "B"
     }
 }
 
