@@ -2,6 +2,8 @@ import { TweetsService } from './../tweets.service';
 import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
 import { Interval } from '@nestjs/schedule';
 import { Cache } from 'cache-manager';
+import { InjectQueue } from '@nestjs/bull';
+import { Queue } from 'bull';
 //import { Queue } from 'bull';
 //import { InjectQueue } from '@nestjs/bull';
 
@@ -13,8 +15,8 @@ export class CheckNewTweetsTask {
     private tweetService: TweetsService,
     @Inject(CACHE_MANAGER)
     private cache: Cache,
-    //@InjectQueue('emails')
-    //private emailsQueue: Queue,
+    @InjectQueue('emails')
+    private emailsQueue: Queue,
   ) {}
 
   @Interval(5000)
@@ -39,7 +41,8 @@ export class CheckNewTweetsTask {
         ttl: 1 * 60 * 10,
       });
 
-      //this.emailsQueue.add({}); //kafka
+      console.log('enviar email');
+      this.emailsQueue.add({}); //kafka
     }
   }
 }
